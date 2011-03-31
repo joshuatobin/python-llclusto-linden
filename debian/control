@@ -1,0 +1,12 @@
+Source: debian-package-skeleton
+Section: net
+Priority: extra
+Maintainer: Lex Linden <lex@lindenlab.com>
+Build-Depends: debhelper (>= 5), python-setuptools, python-support (>= 0.3), python-all-dev
+Standards-Version: 3.7.2
+
+Package: python-llclusto-linden
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, ${python:Depends}, clusto
+Description: Linden Lab drivers for clusto
+ This package provides a set of drivers used to model Linden Lab's equipment in Clusto.
