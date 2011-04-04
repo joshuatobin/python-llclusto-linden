@@ -1,7 +1,10 @@
 #!/usr/bin/make -f
 
-DEB_PYTHON_SYSTEM=pysupport
-
 include /usr/share/cdbs/1/rules/debhelper.mk
-include /usr/share/cdbs/1/rules/simple-patchsys.mk
+
+DEB_PYTHON_SYSTEM = pysupport
+DEB_PYTHON_MODULE_PACKAGE = llclusto
 include /usr/share/cdbs/1/class/python-distutils.mk
+
+clean::
+        -rm -rf build
