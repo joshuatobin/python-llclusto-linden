@@ -7,4 +7,4 @@ DEB_PYTHON_MODULE_PACKAGE = llclusto
 include /usr/share/cdbs/1/class/python-distutils.mk
 
 clean::
-        -rm -rf build
+	-rm -rf build

@@ -1,4 +1,4 @@
-Source: debian-package-skeleton
+Source: python-llclusto-linden
 Section: net
 Priority: extra
 Maintainer: Lex Linden <lex@lindenlab.com>
