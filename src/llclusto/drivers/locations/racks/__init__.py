@@ -1,1 +1,1 @@
-from lindenracks import *
+from lindenracks import LindenRack

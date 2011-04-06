@@ -1,1 +1,1 @@
-from lindenvendor import *
+from lindenvendor import LindenVendor
