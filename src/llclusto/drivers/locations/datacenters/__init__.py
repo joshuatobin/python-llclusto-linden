@@ -1,1 +1,1 @@
-from lindendatacenter import *
+from lindendatacenter import LindenDatacenter

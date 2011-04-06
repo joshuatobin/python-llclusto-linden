@@ -1,1 +1,1 @@
-from hostnamemixin import *
+from hostnamemixin import HostnameMixin

@@ -1,1 +1,1 @@
-from lindenequipment import *
+from lindenequipment import LindenEquipment
