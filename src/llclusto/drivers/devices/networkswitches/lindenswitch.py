@@ -1,5 +1,5 @@
 import clusto
-from clusto.driver import *
+from clusto.drivers import *
 
 class LindenSwitch(BasicNetworkSwitch):
     """
@@ -10,7 +10,7 @@ class LindenSwitch(BasicNetworkSwitch):
     _driver_name = "lindennetworkswitch"
 
 
-class HP2810-48G(LindenSwitch):
+class HP2810_48G(LindenSwitch):
     """
     44 autosensing 10/100/1000 ports 
     (IEEE 802.3 Type 10BASE-T, IEEE 802.3u Type 100BASE-TX, IEEE 802.3ab Type 1000BASE-T)
