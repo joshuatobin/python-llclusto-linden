@@ -1,0 +1,3 @@
+
+class LindenAppliance():
+    pass
