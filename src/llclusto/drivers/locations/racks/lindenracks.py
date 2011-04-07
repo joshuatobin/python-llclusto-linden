@@ -1,5 +1,7 @@
 import clusto
-from clusto.drivers import *
+from clusto.drivers.locations.racks import BasicRack
+from llclusto.drivers.devices.powerstrips import LindenPDU
+
 
 class LindenRack(BasicRack):
     """
