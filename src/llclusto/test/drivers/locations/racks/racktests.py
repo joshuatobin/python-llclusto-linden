@@ -15,7 +15,7 @@ class TestLindenRack(LindenRack):
 class LindenRackPDUTests(testbase.ClustoTestBase):
     """ 
     """
-    def attach_and_remove_pdus(self):
+    def test_attach_and_remove_pdus(self):
         """
         Test to add and remove a pdu to a rack.
         """

@@ -26,6 +26,7 @@ def runtests(tests=None, db='sqlite:///:memory:', echo=False):
     llclusto.test.testbase.DB=db
     llclusto.test.testbase.ECHO=echo
     suite = gettests(tests)
+    print suite
     runner = unittest.TextTestRunner()    
     runner.run(suite)
 
