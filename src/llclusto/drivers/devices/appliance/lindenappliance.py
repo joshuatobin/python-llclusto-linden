@@ -8,16 +8,14 @@ class LindenAppliance(LindenEquipment, LindenHostnameMixin, BasicNetworkSwitch):
     LindenAppliance Driver.                                                                                                             
     """
 
-    _clusto_type = "lindenappliance"
-    _driver_name = "appliance"
-
+    _clusto_type = "appliance"
+    _driver_name = "lindenappliance"
 
 class LindenIsilon(LindenAppliance):
     """
     """
 
-    _clusto_type = "lindenisilon"
-    _driver_name = "isilon"
+    _driver_name = "lindenisilon"
 
     _properties = {'model':None,
                    'manufacturer': 'isilon'}
@@ -27,19 +25,56 @@ class LindenIsilon(LindenAppliance):
                  'console-serial' : { 'numports':1, }
                  }
 
+class LindenGSA(LindenAppliance):
+    """
+    LindenGSA Driver
+    """
 
-class LindenGSA():
-    """
-    """
+    _driver_name = "lindengsa"
+
+    _properties = {'model':None,
+                   'manufacturer': 'google'}
+
     _driver_name = "GSA"
     _portmeta = {'pwr-nema-5': {'numports': 2},
                  'nic-eth': {'numports': 1},
                  'console-serial': {'numports': 1}}
     rack_units = 2
 
+class LindenF58900(LindenAppliance):
+    """
+    Big IP F5 Hardware Loadbalancer Driver.
+    """
 
-class LindenF5():
-    pass
+    _driver_name = "f5hwlb8900"
+
+    _properties = {'model':None,
+                   'manufacturer': 'F5'}
+
+    _portmeta = {'pwr-nema-5': {'numports': 2},
+                 'nic-eth': {'numports': 16},
+                 'giga-fiber': {'numports': 8},
+                 'console-serial': {'numports': 1}}
+
+    rack_units = 2
+
+class LindenF51600(LindenAppliance):
+    """
+    Big IP F5 Hardware Loadbalancer Driver.
+    """
+
+    _driver_name = "hwlb1600"
+
+    _properties = {'model': '1600',
+                   'manufacturer': 'F5'}
+
+    _portmeta = {'pwr-nema-5': {'numports': 2},
+                 'nic-eth': {'numports': 4},
+                 'giga-fiber': {'numports': 2},
+                 'console-serial': {'numports': 1}}
+
+    rack_units = 1
+
 
 
 
