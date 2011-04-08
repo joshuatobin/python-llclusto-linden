@@ -1,4 +1,3 @@
-from lindenserver import *
 from lindenserver import LindenServer, RevertPGIImageError
 from serverclass import ServerClass
 from class5 import Class5Server
