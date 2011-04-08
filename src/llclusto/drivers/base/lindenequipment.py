@@ -12,15 +12,19 @@ class LindenEquipment(Driver):
         except LookupError:
             name_manager = SimpleNameManager("LindenEquipment_name_manager", basename="LL", digits=10)
 
-        clusto.begin_transaction()
+        try:
+            clusto.begin_transaction()
 
-        name, num = name_manager.allocator()
+            name, num = name_manager.allocator()
 
-        super(LindenEquipment, self).__init__(name, *args, **kwargs)
+            super(LindenEquipment, self).__init__(name, *args, **kwargs)
 
-        name_manager.allocate(self, name)
+            name_manager.allocate(self, name)
 
-        clusto.commit()
+            clusto.commit()
+        except:
+            clusto.rollback_transaction()
+            raise
 
     def __repr__(self):
         if hasattr(self, "get_hostname"):
