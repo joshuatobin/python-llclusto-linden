@@ -2,25 +2,25 @@ from lindenserver import LindenServer
 from llclusto.drivers import LindenEquipment
 from llclusto.exceptions import LLClustoError
 
-
-"""Class 7 hosts are blade servers, with 4 fitting in each 2U chassis."""
-
 class ChassisFullError(LLClustoError):
     pass
     
 
 class Class7Chassis(LindenEquipment):
-    """Each Class 7 Chassis fits four Class 7 Servers, but we don't currently
+    """Class 7 Servers are blade servers, with 4 fitting in each 2U chassis. 
+    Each Class 7 Chassis fits four Class 7 Servers, but we don't currently
     keep track of which of the four slots each server is in.  It doesn't
-    particularly matter at the moment.
+    particularly matter; when we need to direct remote hands to a specific
+    blade, we just give them the MAC address, which is labelled on the 
+    front of the blade.
     """
 
     _driver_name = "class7chassis"
     _clusto_type = "serverchassis"
 
-    # Hardcoding this into the class rather than making it a property.  There's
-    # never going to be a Class 7 Chassis that has any different number of
-    # slots.
+    # Hardcoding _num_slots into the class rather than making it a property.  
+    # There's never going to be a Class 7 Chassis that has any different number
+    # of slots.
 
     _num_slots = 4
 
@@ -29,10 +29,11 @@ class Class7Chassis(LindenEquipment):
     _properties = {'serial_number': None,
                    'asset_tag': None}
 
-    _portmeta = {'pwr-nema-5': {'numports': 2}
+    _portmeta = {'pwr-nema-5': {'numports': 2},
                 }
 
     def insert(self, server):
+        """Add a Class7Server to this chassis."""
 
         if not isinstance(server, Class7Server):
             raise TypeError("Only Class 7 Servers may be inserted into a Class 7 Chassis.")
@@ -58,15 +59,14 @@ class Class7Chassis(LindenEquipment):
             return chassis.pop()
 
 class Class7Server(LindenServer):
-    """
+    """A Class 7 Server is a blade that fits in a Class 7 Chassis, 4 per 
+    chassis.  Power comes from the chassis, so this driver has no power port
+    listed.
     """
 
     _driver_name = "class7server"
 
     _server_class_name = "Class 7"
-
-    # TODO: declaring a port of type 'ipmi' here means it can't be connected
-    # to a normal "nic-eth" switch.  We really need port compatibility.
 
     _portmeta = {'nic-eth': {'numports': 2},
                 }

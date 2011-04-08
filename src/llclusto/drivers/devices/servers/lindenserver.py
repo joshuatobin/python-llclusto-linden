@@ -1,5 +1,5 @@
 from llclusto.drivers import LindenEquipment, LindenHostnameMixin
-from clusto.drivers import PortMixin
+from clusto.drivers import PortMixin, Driver
 from serverclass import ServerClass
 from llclusto.exceptions import LLClustoError
 import clusto
@@ -11,6 +11,8 @@ class RevertPGIImageError(LLClustoError):
 class LindenServer(LindenEquipment, PortMixin, LindenHostnameMixin):
     """
     LindenServer driver.  Holds common functionality shared by all servers.
+    It is not intended that you instantiate Entities of this class directly.
+    Instantiate a subclass instead.
 
     Subclasses of this class will define a "Server Class", a term used at Linden
     Lab to refer to a group of servers all with the same specifications.  We
@@ -37,11 +39,11 @@ class LindenServer(LindenEquipment, PortMixin, LindenHostnameMixin):
     _properties = {'server_class': None, 
                    "serial_number": None,
                    "asset_tag": None,
-                   "_pgi_image": None,
-                   "_previous_pgi_image": None,
+                   "pgi_image": None,
+                   "previous_pgi_image": None,
                    }
 
-    _server_class_name = "Unspecified Server Class"
+    _server_class_name = "<Unspecified Server Class>"
 
     def __init__(self, hostname, **kwargs):
         """Create a new server.
@@ -76,7 +78,7 @@ class LindenServer(LindenEquipment, PortMixin, LindenHostnameMixin):
 
             >>> print server.server_class.num_cpus
         """
-
+        
         if name in ServerClass._properties:
             return getattr(self.server_class, name)
         else:
@@ -86,47 +88,53 @@ class LindenServer(LindenEquipment, PortMixin, LindenHostnameMixin):
         """Prevent setting of facts stored in the server class, such as number
         of CPUs.
         """
-
-        if name in ServerClass._properties:
-            raise AttributeError("can't set attributes of server class")
+        
+        # Sadly, __setattr__ is ALWAYS called, even if I define a property with
+        # a setter method.  I have to call the setters here instead.
+        
+        if name == "pgi_image":
+            self._set_pgi_image(value)
+        elif name == "previous_pgi_image":
+            raise AttributeError("can't set attribute")
         else:
-            super(LindenServer, self).__setattr__(name, value)
+            if name in ServerClass._properties:
+                raise AttributeError("can't set attributes of server class")
+            else:
+                super(LindenServer, self).__setattr__(name, value)
 
     def _set_pgi_image(self, image):
-        """ Setter method for the pgi_iamge property  
+        """ Setter method for the pgi_image property  
 
-        Automatically keeps track of the previous associated PGI image.
+        Automatically keeps track of the previous associated PGI image in 
+        self.previous_pgi_image.
         """
 
         try:
             clusto.begin_transaction()
 
-            self._previous_pgi_image = self._pgi_image
-            self._pgi_image = image
+            #self.set_attr("previous_pgi_image", self.pgi_image, subkey="property")
+            #self.set_attr("pgi_image", image, subkey="property")
+
+            Driver.__setattr__(self, "previous_pgi_image", self.pgi_image)
+            Driver.__setattr__(self, "pgi_image", image)
 
             clusto.commit()
         except:
             clusto.rollback_transaction()
+            raise
 
     def _get_pgi_image(self):
         """ Getter method for the pgi_image property
         """
 
-        return self._pgi_image
+        #return self.attr_value(key="pgi_image", subkey="property")
+        return Driver.__getattr__(self, "pgi_image")
 
-    def _get_previous_pgi_image(self):
-        """ Getter method for the previous_pgi_image property
-        """
-
-        return self._previous_pgi_image
-
-    pgi_image = property(_get_pgi_image, _set_pgi_image, doc=
-                         """PGI image associated with this host.  
-
-                            Assigning a new PGI image automatically stores the 
-                            previous PGI image in this server as the
-                            previous_pgi_image.""")
-    previous_pgi_image = property(_get_previous_pgi_image, doc="""PGI image previously associated with this host.""")
+    pgi_image = property(_get_pgi_image, _set_pgi_image, 
+                         doc="""PGI image associated with this host.  
+                                Assigning a new PGI image automatically 
+                                stores the previous PGI image in this 
+                                server as the previous_pgi_image.""")
 
     def revert_pgi_image(self):
         """ Revert this host to the previously assigned PGI image.

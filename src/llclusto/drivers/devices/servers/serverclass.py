@@ -8,11 +8,11 @@ class ServerClass(Driver):
     hardware, such as CPU speed, number of CPUs, number of disks, raid layout, 
     etc.
 
-    We store this information in its own entity so that we have the above
-    information in the Clusto database, but we don't have to store, for example,
-    cpu speed as an Attribute for every host.  This also makes it easy to record
-    new information about an entire class of servers without having to add an
-    attribute to thousands of server entities.
+    We store this information in its own entity so that we have it in the 
+    Clusto database, but we don't have to store each item as an Attribute
+    for every host.  This also makes it easy to record new information about
+    an entire class of servers without having to add an attribute to thousands
+    of server entities.
 
     """
 
