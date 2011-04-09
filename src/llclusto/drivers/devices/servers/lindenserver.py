@@ -90,7 +90,7 @@ class LindenServer(LindenEquipment, PortMixin, LindenHostnameMixin):
         """
         
         # Sadly, __setattr__ is ALWAYS called, even if I define a property with
-        # a setter method.  I have to call the setters here instead.
+        # a setter method.  I have to call the setter here instead.
         
         if name == "pgi_image":
             self._set_pgi_image(value)
@@ -112,9 +112,6 @@ class LindenServer(LindenEquipment, PortMixin, LindenHostnameMixin):
         try:
             clusto.begin_transaction()
 
-            #self.set_attr("previous_pgi_image", self.pgi_image, subkey="property")
-            #self.set_attr("pgi_image", image, subkey="property")
-
             Driver.__setattr__(self, "previous_pgi_image", self.pgi_image)
             Driver.__setattr__(self, "pgi_image", image)
 
@@ -127,7 +124,6 @@ class LindenServer(LindenEquipment, PortMixin, LindenHostnameMixin):
         """ Getter method for the pgi_image property
         """
 
-        #return self.attr_value(key="pgi_image", subkey="property")
         return Driver.__getattr__(self, "pgi_image")
 
     pgi_image = property(_get_pgi_image, _set_pgi_image, 
