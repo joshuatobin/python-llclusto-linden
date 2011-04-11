@@ -1,5 +1,5 @@
 import clusto
-from lindendatabase import LindenDatabase
+from database import LindenDatabase
 from serverclass import ServerClass
 
 class Orca(LindenDatabase):

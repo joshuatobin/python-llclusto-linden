@@ -1,9 +1,9 @@
 import clusto
 from llclusto.drivers.base import LindenEquipment
 from llclusto.drivers.common import LindenHostnameMixin
-from clusto.drivers.devices.networkswitches import BasicNetworkSwitch
 
-class LindenAppliance(LindenEquipment, LindenHostnameMixin, BasicNetworkSwitch):
+
+class LindenAppliance(LindenEquipment, LindenHostnameMixin):
     """                                                                                                                              
     LindenAppliance Driver.                                                                                                             
     """
@@ -18,7 +18,7 @@ class LindenIsilon(LindenAppliance):
     _driver_name = "lindenisilon"
 
     _properties = {'model':None,
-                   'manufacturer': 'isilon'}
+                   'manufacturer': None}
 
     _portmeta = {'pwr-nema-5': {'numports':2},
                  'nic-eth': {'numports':2},
@@ -33,15 +33,15 @@ class LindenGSA(LindenAppliance):
     _driver_name = "lindengsa"
 
     _properties = {'model':None,
-                   'manufacturer': 'google'}
+                   'manufacturer': None}
 
-    _driver_name = "GSA"
+
     _portmeta = {'pwr-nema-5': {'numports': 2},
                  'nic-eth': {'numports': 1},
                  'console-serial': {'numports': 1}}
     rack_units = 2
 
-class LindenF58900(LindenAppliance):
+class LindenF5_8900(LindenAppliance):
     """
     Big IP F5 Hardware Loadbalancer Driver.
     """
@@ -58,7 +58,7 @@ class LindenF58900(LindenAppliance):
 
     rack_units = 2
 
-class LindenF51600(LindenAppliance):
+class LindenF5_1600(LindenAppliance):
     """
     Big IP F5 Hardware Loadbalancer Driver.
     """

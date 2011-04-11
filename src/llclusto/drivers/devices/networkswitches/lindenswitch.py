@@ -34,13 +34,10 @@ class HP2810_48G(LindenSwitch):
         'pwr-nema-5': {'numports': 1},
         'console-serial': {'numports': 1},
         'nic-eth': {'numports': 48},
-        'nic-mini-gbic': {'numports': 4},
+        'nic-mini-gbic': {'numports': 4}, 
     }
 
-
-# We may need to create a Juniper 'virtual Chassis Class' and insert each switch into a 'virtual chassis'
-
-class JuniperEX4200(LindenSwitch):
+class Juniper_EX4200(LindenSwitch):
     """
     Juniper EX4200-48P/48T
  
