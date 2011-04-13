@@ -24,6 +24,7 @@ class ServerClass(Driver):
 
     _properties = {'num_cpus': None,
                    'cores_per_cpu': None,
+                   'cpu_speed': None,
                    'ram_size': None,
                    'disk_size': None,
                   }
