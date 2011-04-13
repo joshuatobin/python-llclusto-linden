@@ -1,9 +1,9 @@
 import clusto
-from llclusto.drivers.base import LindenEquipment
+from llclusto.drivers.base import LindenRackableEquipment
 from llclusto.drivers.common import LindenHostnameMixin
 
 
-class LindenAppliance(LindenEquipment, LindenHostnameMixin):
+class LindenAppliance(LindenRackableEquipment, LindenHostnameMixin):
     """                                                                                                                              
     LindenAppliance Driver.                                                                                                             
     """

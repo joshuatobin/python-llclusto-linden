@@ -1,4 +1,4 @@
-from llclusto.drivers import LindenEquipment, LindenHostnameMixin
+from llclusto.drivers import LindenRackableEquipment, LindenHostnameMixin
 from clusto.drivers import PortMixin, Driver
 from serverclass import ServerClass
 from llclusto.exceptions import LLClustoError
@@ -8,7 +8,7 @@ import llclusto
 class RevertPGIImageError(LLClustoError):
     pass
 
-class LindenServer(LindenEquipment, PortMixin, LindenHostnameMixin):
+class LindenServer(LindenRackableEquipment, PortMixin, LindenHostnameMixin):
     """
     LindenServer driver.  Holds common functionality shared by all servers.
     It is not intended that you instantiate Entities of this class directly.

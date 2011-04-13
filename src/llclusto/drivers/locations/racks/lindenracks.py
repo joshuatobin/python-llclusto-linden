@@ -1,9 +1,9 @@
 import clusto
-from clusto.drivers.locations.racks import BasicRack
 from llclusto.drivers.devices.powerstrips import LindenPDU
+from llclusto.drivers.base import LindenEquipment, LindenRackableEquipment
+from clusto.drivers.locations.racks import BasicRack
 
-
-class LindenRack(BasicRack):
+class LindenRack(LindenEquipment, BasicRack):
     """
     LindenRack driver.
     """
@@ -50,6 +50,36 @@ class LindenRack(BasicRack):
         else:
             self.del_attrs("_contains", value=pdu, subkey="pdu")
 
+###
+### The inserter method was cargo-culted from basicrack.py in the clusto source. 
+### The upstream version of BasicRack.insert() only allows inserts for classes of Device. 
+###
+    def insert(self, device, rackU):
+        """Insert a given device into the given rackU."""
+
+        if not isinstance(device, LindenRackableEquipment):
+            raise TypeError("You can only add Rackable Equipment to a rack.  %s is a"
+                            " %s" % (device.name, str(device.__class__)))
+
+        rackU = self._ensure_rack_u(rackU)
+
+        rau = self.get_rack_and_u(device)
+
+        if rau != None:
+            raise Exception("%s is already in rack %s"
+                            % (device.name, rau['rack'].name))
+
+        if hasattr(device, 'rack_units') and (len(rackU) != device.rack_units):
+            raise TypeError("%s is a %dU device, cannot insert it in %dU"
+                            % (device.name, units, len(rackU)))
+
+        for U in rackU:
+            dev = self.get_device_in(U)
+            if dev:
+                raise TypeError("%s is already in RU %d" % (dev.name, U))
+
+        for U in rackU:
+            self.add_attr("_contains", device, number=U, subkey='ru')
 
 
 

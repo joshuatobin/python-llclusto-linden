@@ -2,22 +2,20 @@ import clusto
 from clusto.drivers import Driver
 
 class PGIImage(Driver):
+    """Driver for PGI Images.    
     """
-    """
-
     _driver_name = "pgi_image"
     _clusto_type = "pgi_image"
-
 
     def get_image_associations(self):
         """Returns a list of hosts this PGI image is associated with. 
         """
-        pass        
+        return self.referencers(key='pgi_image')
 
-    def get_systemimager_stored_on(self):
+    def get_si_server_image_stored_on(self):
         """Returns a list of PGI systemimagers this image is stored on.
         """
-        pass
+        return self.parents(subkey="pgi-image")
 
 
         
