@@ -29,8 +29,8 @@ class LindenPGITests(testbase.ClustoTestBase):
         
         server0.pgi_image = image0
         server1.pgi_image = image1
-        self.assertEquals(server0.pgi_image.name, 'pgi-image0')
-        self.assertEquals(server1.pgi_image.name, 'pgi-image1')
+        self.assertEquals(server0.pgi_image, image0)
+        self.assertEquals(server1.pgi_image, image1)
 
         self.assertEquals(type(image0.get_image_associations()), list)
 
@@ -45,8 +45,9 @@ class LindenPGITests(testbase.ClustoTestBase):
 
         server0.pgi_image = image1
         server1.pgi_image = image0
-        self.assertEquals(server0.pgi_image.name, 'pgi-image1')
-        self.assertEquals(server1.pgi_image.name, 'pgi-image0')
+
+        self.assertEquals(server0.pgi_image, image1)
+        self.assertEquals(server1.pgi_image, image0)
 
         
     def test_get_si_server_image_stored_on(self):

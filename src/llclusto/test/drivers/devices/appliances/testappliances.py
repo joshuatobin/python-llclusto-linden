@@ -1,43 +1,43 @@
 import clusto
 import llclusto
 from llclusto.test import testbase
-from llclusto.drivers.devices.appliance import LindenGSA, LindenF5_8900, LindenF5_1600, LindenIsilon
+from llclusto.drivers.devices.appliance import GSA, F5_8900, F5_1600, Isilon
 
-class LindenGSATests(testbase.ClustoTestBase):
+class GSATests(testbase.ClustoTestBase):
     """ 
     """
     def test_gsa(self):
         """
         """
-        gsa = LindenGSA()
+        gsa = GSA()
         self.assertEquals(gsa.type, 'appliance')
 
-class LindenF58900Tests(testbase.ClustoTestBase):
+class F58900Tests(testbase.ClustoTestBase):
     """ 
     """
     def test_f5(self):
         """
         """
-        f5 = LindenF5_8900()
+        f5 = F5_8900()
         self.assertEquals(f5.type, 'appliance')
 
-class LindenF51600Tests(testbase.ClustoTestBase):
+class F51600Tests(testbase.ClustoTestBase):
     """ 
     """
     def test_f5(self):
         """
         """
-        f5 = LindenF5_1600()
+        f5 = F5_1600()
         self.assertEquals(f5.type, 'appliance')
 
-class LindenIsilonTests(testbase.ClustoTestBase):
+class IsilonTests(testbase.ClustoTestBase):
     """ 
     """
     def test_isilon(self):
         """
 
         """
-        isilon = LindenIsilon()
+        isilon = Isilon()
         self.assertEquals(isilon.type, 'appliance')
 
 
