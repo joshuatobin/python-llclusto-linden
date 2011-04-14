@@ -1,2 +1,2 @@
 from hostnamemixin import LindenHostnameMixin
-
+from ipmimixin import LindenIPMIMixin

@@ -18,4 +18,4 @@ class LLClustoTests(testbase.ClustoTestBase):
         s1 = llclusto.get_by_hostname('foo')
 
         self.assertEqual(len(s1), 1)
-        self.assertEqual(s1[0].hostname, 'foo')
+        self.assertEqual(s1[0], d1)

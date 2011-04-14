@@ -14,10 +14,11 @@ class LindenIPMITests(testbase.ClustoTestBase):
     def testIPMICreation(self):
         d1 = TestIPMI()
         d1.set_ipmi_info("mgmt.lindenlab.com")
-        
         d1_ipmi = d1.get_ipmi_info()
-        self.assertEquals(d1_ipmi, "mgmt.lindenlab.com")
         
+        self.assertEquals(d1.get_ipmi_info(), "mgmt.lindenlab.com")
+        self.assertEquals(d1.ipmi, "mgmt.lindenlab.com")
+
         d1.set_ipmi_info("mgmt2.lindenlab.com")
         d1_ipmi = d1.get_ipmi_info()
         self.assertEquals(d1_ipmi, "mgmt2.lindenlab.com")

@@ -15,7 +15,7 @@ class LindenIPMIMixin():
 
     def set_ipmi_info(self, ipmi_hostname):
         """ Set the ipmi hostname associated with the ipmi interface"""
-        if not isinstance(ipmi_hostname, str):
+        if not isinstance(ipmi_hostname, basestring):
             raise TypeError("The IPMI hostname must be a string") 
         self.set_port_attr(self._ipmi_port_type, self._ipmi_port_num, "ipmi_hostname", ipmi_hostname)
     

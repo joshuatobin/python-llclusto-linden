@@ -2,7 +2,7 @@ import clusto
 import llclusto
 from llclusto.test import testbase
 from llclusto.drivers import Class5Server, ServerClass
-from llclusto.drivers.devices.servers import PGIImage
+from llclusto.drivers.pgi import PGIImage
 
 class LindenPGITests(testbase.ClustoTestBase):
     """ 
