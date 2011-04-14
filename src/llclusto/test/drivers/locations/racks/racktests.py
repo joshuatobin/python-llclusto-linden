@@ -17,8 +17,9 @@ class LindenRackPDUTests(testbase.ClustoTestBase):
         pdu3 = LindenPDU()
         pdu4 = LindenPDU()
         pdu5 = LindenPDU()
-        rack = LindenRack()
-        
+        rack = LindenRack("c3-03-31")
+        non_linden_switch = clusto.drivers.networkswitches.Cisco2960("non-linden-switch")
+
         self.assertEquals(pdu1.type, 'pdu')
         self.assertEquals(rack.type, 'rack')
         self.assertEquals(rack.get_attached_pdus(), [])
@@ -64,7 +65,8 @@ class LindenRackPDUTests(testbase.ClustoTestBase):
         rack.detach_pdu(pdu4)
         self.assertEquals(rack.contents(), [])
 
-
+        # Raise an exception if a device not in LindenRackableEquipment is inserted
+        self.assertRaises(Exception, lambda: rack.insert(non_linden_switch, 1))
 
 
 
