@@ -1,5 +1,9 @@
 import clusto
 from clusto.drivers import *
+from llclusto.exceptions import LLClustoError
+
+class IPMIHostnameError(LLClustoError):
+    pass
 
 class LindenIPMIMixin():
     """ Provides IPMI functionality.
@@ -13,19 +17,47 @@ class LindenIPMIMixin():
     _ipmi_port_type = 'nic-eth'
     _ipmi_port_num = 1
 
-    def set_ipmi_info(self, ipmi_hostname):
+    def set_ipmi_info(self, ipmi_hostname, ipmi_mac):
         """ Set the ipmi hostname associated with the ipmi interface"""
-        if not isinstance(ipmi_hostname, basestring):
-            raise TypeError("The IPMI hostname must be a string") 
-        self.set_port_attr(self._ipmi_port_type, self._ipmi_port_num, "ipmi_hostname", ipmi_hostname)
+        try:
+            clusto.begin_transaction()
+
+            if not isinstance(ipmi_hostname, basestring):
+                raise TypeError("The IPMI hostname must be a string") 
+            elif not ipmi_hostname.startswith("mgmt"):
+                raise IPMIHostnameError("IPMI hostname must start with 'mgmt'")
+            if not isinstance(ipmi_mac, basestring):
+                raise TypeError("The IPMI mac address must be a string")
+
+            self.set_port_attr(self._ipmi_port_type, self._ipmi_port_num, "ipmi_hostname", ipmi_hostname)
+            self.set_port_attr(self._ipmi_port_type, self._ipmi_port_num, "ipmi_mac", ipmi_mac)
+
+            clusto.commit()
+        except:
+            clusto.rollback_transaction()
+            raise
     
     def get_ipmi_info(self):
-        """ Get the hostname for the ipmi interface"""
-        return self.get_port_attr(self._ipmi_port_type, self._ipmi_port_num, "ipmi_hostname")
+        """ Get the hostname and mac address as a tuple for the ipmi interface. """
+        ipmi_hostname = self.get_port_attr(self._ipmi_port_type, self._ipmi_port_num, "ipmi_hostname")
+        ipmi_mac = self.get_port_attr(self._ipmi_port_type, self._ipmi_port_num, "ipmi_mac")
+        if not ipmi_hostname and not ipmi_mac:
+            return None
+        else:
+            return (ipmi_hostname, ipmi_mac)
 
     def del_ipmi_info(self):
-        """ Delete the ipmi_hostname"""
-        self.del_port_attr(self._ipmi_port_type, self._ipmi_port_num, "ipmi_hostname")
+        """ Delete the ipmi hostname and mac address attributes. """
+        try:
+            clusto.begin_transaction()
+
+            self.del_port_attr(self._ipmi_port_type, self._ipmi_port_num, "ipmi_hostname")
+            self.del_port_attr(self._ipmi_port_type, self._ipmi_port_num, "ipmi_mac")
+
+            clusto.commit()
+        except:
+            clusto.rollback_transaction()
+            raise
 
     def ipmi_powercycle(self):
         """ """

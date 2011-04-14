@@ -174,3 +174,7 @@ class LindenServer(LindenRackableEquipment, PortMixin, LindenHostnameMixin):
         else:
             self.del_attrs(key="_contains", value=image, subkey="pgi-image")
 
+
+    def has_ipmi(self):
+        """ Returns true if server has ipmi configured. """
+        return self.has_attr(subkey="ipmi_hostname") and self.has_attr(subkey="ipmi_mac")
