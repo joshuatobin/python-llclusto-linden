@@ -1,9 +1,9 @@
 import clusto
-from llclusto.drivers.base import LindenEquipment
+from llclusto.drivers.base import LindenRackableEquipment
 from llclusto.drivers.common import LindenHostnameMixin
 from clusto.drivers.devices.networkswitches import BasicNetworkSwitch
 
-class LindenSwitch(LindenEquipment, LindenHostnameMixin, BasicNetworkSwitch):
+class LindenSwitch(LindenRackableEquipment, LindenHostnameMixin, BasicNetworkSwitch):
     """
     LindenSwitch Driver.
     """

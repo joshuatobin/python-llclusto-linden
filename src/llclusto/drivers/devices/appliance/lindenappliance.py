@@ -1,9 +1,9 @@
 import clusto
-from llclusto.drivers.base import LindenEquipment
+from llclusto.drivers.base import LindenRackableEquipment
 from llclusto.drivers.common import LindenHostnameMixin
 
 
-class LindenAppliance(LindenEquipment, LindenHostnameMixin):
+class LindenAppliance(LindenRackableEquipment, LindenHostnameMixin):
     """                                                                                                                              
     LindenAppliance Driver.                                                                                                             
     """
@@ -11,11 +11,11 @@ class LindenAppliance(LindenEquipment, LindenHostnameMixin):
     _clusto_type = "appliance"
     _driver_name = "lindenappliance"
 
-class LindenIsilon(LindenAppliance):
+class Isilon(LindenAppliance):
     """
     """
 
-    _driver_name = "lindenisilon"
+    _driver_name = "isilon"
 
     _properties = {'model':None,
                    'manufacturer': None}
@@ -25,12 +25,12 @@ class LindenIsilon(LindenAppliance):
                  'console-serial' : { 'numports':1, }
                  }
 
-class LindenGSA(LindenAppliance):
+class GSA(LindenAppliance):
     """
-    LindenGSA Driver
+    GSA Driver
     """
 
-    _driver_name = "lindengsa"
+    _driver_name = "gsa"
 
     _properties = {'model':None,
                    'manufacturer': None}
@@ -41,7 +41,7 @@ class LindenGSA(LindenAppliance):
                  'console-serial': {'numports': 1}}
     rack_units = 2
 
-class LindenF5_8900(LindenAppliance):
+class F5_8900(LindenAppliance):
     """
     Big IP F5 Hardware Loadbalancer Driver.
     """
@@ -58,7 +58,7 @@ class LindenF5_8900(LindenAppliance):
 
     rack_units = 2
 
-class LindenF5_1600(LindenAppliance):
+class F5_1600(LindenAppliance):
     """
     Big IP F5 Hardware Loadbalancer Driver.
     """

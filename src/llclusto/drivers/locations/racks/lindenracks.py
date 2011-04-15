@@ -1,7 +1,7 @@
 import clusto
-from clusto.drivers.locations.racks import BasicRack
 from llclusto.drivers.devices.powerstrips import LindenPDU
-
+from llclusto.drivers.base import LindenEquipment, LindenRackableEquipment
+from clusto.drivers.locations.racks import BasicRack
 
 class LindenRack(BasicRack):
     """
@@ -51,7 +51,10 @@ class LindenRack(BasicRack):
             self.del_attrs("_contains", value=pdu, subkey="pdu")
 
 
+### Subclassing _ensure_compatible_device from basicrack.py. BasicRack is limited in that it only allows
+### inserting devices of class Device. Hardcoding Lindenrackableequipment.
 
-
-    
-
+    def _ensure_compatible_device(self, device):
+        if not isinstance(device, LindenRackableEquipment):
+            raise TypeError("You can only add Linden Rackable Devices to a rack.  %s is a"
+                            " %s" % (device.name, str(device.__class__)))

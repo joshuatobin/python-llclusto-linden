@@ -1,7 +1,7 @@
 import clusto
 import llclusto
 from llclusto.test import testbase
-from llclusto.drivers.devices.networkswitches import LindenSwitch, HP2810_48G, JuniperEX4200
+from llclusto.drivers.devices.networkswitches import LindenSwitch, HP2810_48G, Juniper_EX4200
 
 class LindenSwitchTests(testbase.ClustoTestBase):
     """ 
@@ -28,7 +28,7 @@ class JuniperEX4200Tests(testbase.ClustoTestBase):
         """
 
         """
-        switch = JuniperEX4200()
+        switch = Juniper_EX4200()
         self.assertEquals(switch.type, 'networkswitch')
 
 

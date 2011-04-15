@@ -1,1 +1,2 @@
 from lindenequipment import LindenEquipment
+from lindenrackableequipment import LindenRackableEquipment

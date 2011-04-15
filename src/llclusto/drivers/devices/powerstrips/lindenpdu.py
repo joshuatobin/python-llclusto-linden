@@ -1,4 +1,3 @@
-
 from llclusto.drivers.base import LindenEquipment
 from llclusto.drivers.common import LindenHostnameMixin
 from clusto.drivers.devices.common import PortMixin
