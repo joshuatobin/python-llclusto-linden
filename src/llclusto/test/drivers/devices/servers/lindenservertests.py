@@ -1,7 +1,7 @@
 import llclusto
 from llclusto.test import testbase
 
-from llclusto.drivers import LindenServer, ServerClass, RevertPGIImageError, LindenIPMIMixin
+from llclusto.drivers import LindenServer, ServerClass, RevertPGIImageError, LindenIPMIMixin, PGIImage
 
 class ClassXServer(LindenServer):
     """A subclass of LindenServer specifically here to let us test LindenServer.
@@ -63,34 +63,47 @@ class LindenServerTests(testbase.ClustoTestBase):
     def test_pgi_image(self):
         server = ClassXServer("test1.lindenlab.com")
 
-        server.pgi_image = "image1"
+        def assign_non_image(server):
+            server.pgi_image = "notanimage"
 
-        self.assertEquals(server.pgi_image, "image1")
+        self.assertRaises(TypeError, assign_non_image, server) # Was able to assign something that is not a PGIImage to server.pgi_image
 
-        server.pgi_image = "image2"
+        image1 = PGIImage("image1")
+        image2 = PGIImage("image2")
 
-        self.assertEquals(server.previous_pgi_image, "image1", "When setting pgi_image, old image was not stored in previous_pgi_image")
+        server.pgi_image = image1
+
+        self.assertEquals(server.pgi_image, image1)
+
+        server.pgi_image = image2
+
+        self.assertEquals(server.previous_pgi_image, image1, "When setting pgi_image, old image was not stored in previous_pgi_image")
 
     def test_previous_pgi_image(self):
         server = ClassXServer("test1.lindenlab.com")
 
+        image1 = PGIImage("image1")
+
         def assign_previous_pgi_image(server):
-            server.previous_pgi_image = "image1"
+            server.previous_pgi_image = image1
 
         self.assertRaises(AttributeError, assign_previous_pgi_image, server) # Should not be able to set read-only property previous_pgi_image
 
     def test_revert_pgi_image(self):
         server = ClassXServer("test1.lindenlab.com")
 
-        server.pgi_image = "image1"
+        image1 = PGIImage("image1")
+        image2 = PGIImage("image2")
+
+        server.pgi_image = image1
 
         self.assertRaises(RevertPGIImageError, lambda: server.revert_pgi_image()) # "Revert should fail when there was no previous associated image
 
-        server.pgi_image = "image2"
+        server.pgi_image = image2
 
         server.revert_pgi_image()
 
-        self.assertEquals((server.pgi_image, server.previous_pgi_image), ("image1", "image2"), "Revert did not properly swap current and previous image")
+        self.assertEquals((server.pgi_image, server.previous_pgi_image), (image1, image2), "Revert did not properly swap current and previous image")
 
     def test_add_stored_pgi_image(self):
         server = ClassXServer("test1.lindenlab.com")
@@ -102,26 +115,32 @@ class LindenServerTests(testbase.ClustoTestBase):
     def test_get_stored_pgi_images(self):
         server = ClassXServer("test1.lindenlab.com")
 
-        server.add_stored_pgi_image("image1")
+        image1 = PGIImage("image1")
+        image2 = PGIImage("image2")
 
-        self.assertEqual(["image1"], server.get_stored_pgi_images())
+        server.add_stored_pgi_image(image1)
 
-        server.add_stored_pgi_image("image2")
+        self.assertEqual([image1], server.get_stored_pgi_images())
 
-        self.assertEqual(["image1", "image2"], server.get_stored_pgi_images())
+        server.add_stored_pgi_image(image2)
+
+        self.assertEqual([image1, image2], server.get_stored_pgi_images())
 
     def test_delete_stored_pgi_image(self):
         server = ClassXServer("test1.lindenlab.com")
 
-        server.add_stored_pgi_image("image1")
+        image1 = PGIImage("image1")
+        image2 = PGIImage("image2")
 
-        self.assert_("image1" in server)
+        server.add_stored_pgi_image(image1)
 
-        server.delete_stored_pgi_image("image1")
+        self.assert_(image1 in server)
 
-        self.assert_("image1" not in server, "Deleting an image from a PGI systemimager did not actually remove the image.")
+        server.delete_stored_pgi_image(image1)
 
-        self.assertRaises(LookupError, lambda: server.delete_stored_pgi_image("image1")) # Exception should be raised when attempting to delete an image not stored on a PGI systemimager
+        self.assert_(image1 not in server, "Deleting an image from a PGI systemimager did not actually remove the image.")
+
+        self.assertRaises(LookupError, lambda: server.delete_stored_pgi_image(image1)) # Exception should be raised when attempting to delete an image not stored on a PGI systemimager
 
     def test_has_ipmi(self):
         server1 = ClassXServer("test1.lindenlab.com")
