@@ -16,6 +16,9 @@ class LindenPDU(LindenEquipment, LindenHostnameMixin, PortMixin):
                   }
 
 
+    _properties = {"serial_number": None,
+                   "asset_tag": None,
+                   }
 
 
 

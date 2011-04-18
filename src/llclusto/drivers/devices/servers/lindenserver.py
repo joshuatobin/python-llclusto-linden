@@ -45,7 +45,7 @@ class LindenServer(LindenRackableEquipment, PortMixin, LindenHostnameMixin):
 
     _server_class_name = "<Unspecified Server Class>"
 
-    def __init__(self, hostname, **kwargs):
+    def __init__(self, hostname=None, **kwargs):
         """Create a new server.
 
         hostname: The hostname for this server.
@@ -53,14 +53,15 @@ class LindenServer(LindenRackableEquipment, PortMixin, LindenHostnameMixin):
 
         try:
             clusto.begin_transaction()
-
+            
             servers = llclusto.get_by_hostname(hostname)
             if len(servers) > 0:
                 raise ValueError("One or more servers with hostname %s already exist: %s" % (hostname, servers))
 
             super(LindenServer, self).__init__(**kwargs)
-
+            
             self.hostname = hostname
+
             self.server_class = ServerClass.get_server_class(self._server_class_name)
 
             clusto.commit()
