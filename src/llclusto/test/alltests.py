@@ -14,7 +14,8 @@ import llclusto.test
 
 def gettests(tests=None):
     if not tests:
-        tests = ('llclusto.test.drivers',)
+        tests = ('llclusto.test.drivers',
+                 'llclusto.test.base',)
 
     suite = unittest.defaultTestLoader.loadTestsFromNames(tests)
 

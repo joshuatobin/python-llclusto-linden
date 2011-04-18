@@ -1,1 +1,1 @@
-from pgi import *
+from testpgi import LindenPGITests

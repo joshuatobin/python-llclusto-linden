@@ -1,5 +1,6 @@
 from lindenserver import LindenServer
 from llclusto.drivers import LindenRackableEquipment
+from llclusto.drivers import LindenIPMIMixin
 from llclusto.exceptions import LLClustoError
 
 class ChassisFullError(LLClustoError):
@@ -58,7 +59,7 @@ class Class7Chassis(LindenRackableEquipment):
         else:
             return chassis.pop()
 
-class Class7Server(LindenServer):
+class Class7Server(LindenServer, LindenIPMIMixin):
     """A Class 7 Server is a blade that fits in a Class 7 Chassis, 4 per 
     chassis.  Power comes from the chassis, so this driver has no power port
     listed.

@@ -1,7 +1,7 @@
 import llclusto
 from llclusto.test import testbase
 
-from llclusto.drivers import LindenServer, ServerClass, RevertPGIImageError
+from llclusto.drivers import LindenServer, ServerClass, RevertPGIImageError, LindenIPMIMixin
 
 class ClassXServer(LindenServer):
     """A subclass of LindenServer specifically here to let us test LindenServer.
@@ -12,7 +12,7 @@ class ClassXServer(LindenServer):
 
     _server_class_name = "Class X Server"
 
-class ClassYServer(LindenServer):
+class ClassYServer(LindenServer, LindenIPMIMixin):
     """This Driver has class name "Class Y Server", but there won't be any 
     ServerClass entity named "Class Y Server".  Trying to instantiate a
     ClassYServer should result in an error because the server class does not
@@ -123,5 +123,12 @@ class LindenServerTests(testbase.ClustoTestBase):
 
         self.assertRaises(LookupError, lambda: server.delete_stored_pgi_image("image1")) # Exception should be raised when attempting to delete an image not stored on a PGI systemimager
 
-
+    def test_has_ipmi(self):
+        server1 = ClassXServer("test1.lindenlab.com")
+        classY = ServerClass("Class Y Server", num_cpus=3, cores_per_cpu=3, ram_size=19, disk_size=230)
+        server2 = ClassYServer("test2.lindenlab.com")
+        
+        self.assertFalse(server1.has_ipmi(), "Server has ipmi configured when it should not.")
+        server2.set_ipmi_info("mgmt.test2.lindenlab.com", "01:02:03:04:05:06")
+        self.assertTrue(server2.has_ipmi(), "Server does not have ipmi configured when it should.")
         

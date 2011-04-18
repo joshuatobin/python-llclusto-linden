@@ -48,17 +48,6 @@ class LindenHostnameTests(testbase.ClustoTestBase):
         self.assertEqual(d2_eth2, 'foo2-2')
 
 
-    def testGetByHostname(self):
-        d1 = TestHostname()
-        d1.hostname = 'foo'
-
-        s1 = llclusto.get_by_hostname('foo')
-
-        self.assertEqual(len(s1), 1)
-
-        self.assertEqual(s1[0].hostname, 'foo')
-
-
     def testDelHostname(self):
         d1 = TestHostname()
         d1.hostname = 'foo'
@@ -111,6 +100,6 @@ class LindenHostnameTests(testbase.ClustoTestBase):
         d1.hostname = 'foo1'
         d1.add_hostname_alias('bar1', 'nic-eth', 2)
         d1.add_hostname_alias('barbar1', 'nic-eth', 3)
-        
+
         d1_hostnames = d1.get_all_hostnames()
-        self.assertEquals(d1_hostnames, ['foo1', 'bar1', 'barbar1'])
+        self.assertEquals(sorted(d1_hostnames), sorted(['bar1', 'barbar1', 'foo1']))
