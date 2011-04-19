@@ -54,7 +54,11 @@ class LindenServer(LindenRackableEquipment, PortMixin, LindenHostnameMixin):
         try:
             clusto.begin_transaction()
             
-            servers = llclusto.get_by_hostname(hostname)
+            if hostname:
+                servers = llclusto.get_by_hostname(hostname)
+            else:
+                servers = []
+
             if len(servers) > 0:
                 raise ValueError("One or more servers with hostname %s already exist: %s" % (hostname, servers))
 
