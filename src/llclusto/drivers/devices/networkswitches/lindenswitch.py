@@ -11,6 +11,25 @@ class LindenSwitch(LindenRackableEquipment, LindenHostnameMixin, BasicNetworkSwi
     _clusto_type = "networkswitch"
     _driver_name = "lindennetworkswitch"
 
+    _properties = {"serial_number": None,
+                   "asset_tag": None,
+
+                   }
+
+class HP2650_48G(LindenSwitch):
+    """
+    HP 2650
+    """
+
+    _driver_name = 'hp2650_48G'
+
+    _portmeta = {
+        'pwr-nema-5': {'numports': 1},
+        'console-serial': {'numports': 1},
+        'nic-eth': {'numports': 48},
+    }
+
+
 class HP2810_48G(LindenSwitch):
     """
     44 autosensing 10/100/1000 ports 

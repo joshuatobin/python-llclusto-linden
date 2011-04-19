@@ -1,6 +1,8 @@
 import clusto
 from lindenserver import LindenServer
 from serverclass import ServerClass
+from llclusto.drivers import LindenIPMIMixin
+
 
 class LindenDatabase(LindenServer):
     """ Generic Linden Database """
@@ -21,13 +23,13 @@ class DB2008(LindenDatabase):
     _server_class_name = "DB 2008"
     rack_units =2
 
-class DB2009(LindenDatabase):
+class DB2009(LindenDatabase, LindenIPMIMixin):
     """ Database 2009 """
     _driver_name = "db2009server"
     _server_class_name = "DB 2009"
     rack_units = 4
 
-class DB2009SSD(LindenDatabase):
+class DB2009SSD(LindenDatabase, LindenIPMIMixin):
     """ Database 2009 with Solid State Disks """
     _driver_name = "db2009ssdserver"
     _server_class_name = "DB 2009 SSD"
