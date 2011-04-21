@@ -34,3 +34,23 @@ class DB2009SSD(LindenDatabase, LindenIPMIMixin):
     _driver_name = "db2009ssdserver"
     _server_class_name = "DB 2009 SSD"
     rack_units = 4
+
+class DWDB(LindenDatabase):
+    """ DWDB 2U """
+    _driver_name = "dwdbserver"
+    _server_class_name = "DWDB"
+    rack_units = 2
+
+class DWDB2008(LindenDatabase):
+    """ DWDB 4U """
+    _driver_name = "dwdb2008server"
+    _server_class_name = "DWDB 2008"
+    rack_units = 2
+
+class DWDB2009(LindenDatabase, LindenIPMIMixin):
+    """ DWDB 4U """
+    _driver_name = "dwdb2009server"
+    _server_class_name = "DWDB 2009"
+    rack_units = 4
+
+

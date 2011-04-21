@@ -12,6 +12,6 @@ class LindenRouter(LindenRackableEquipment, LindenHostnameMixin, PortMixin, IPMi
     _clusto_type = "router"
     _driver_name = "lindenrouter"
 
-    _portmeta = {'pwr-nema-5' : {'numports':4},
+    _portmeta = {'pwr-nema-5' : {'numports':3},
                  'nic-eth' : {'numports':24}}
 
