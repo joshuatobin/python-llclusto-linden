@@ -7,7 +7,7 @@ class PGIImage(Driver):
     _driver_name = "pgi_image"
     _clusto_type = "pgi_image"
 
-    def get_hosts_associated_with(self):
+    def get_image_associations(self):
         """Returns a list of hosts this PGI image is associated with. 
         """
         return self.referencers(key='pgi_image')

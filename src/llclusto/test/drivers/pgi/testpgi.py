@@ -68,17 +68,16 @@ class LindenPGITests(testbase.ClustoTestBase):
 
         server3.add_stored_pgi_image(image3)
         self.assertEquals(server3.get_stored_pgi_images(), [image3])
-        self.assertEquals(image3.get_si_server_image_stored_on(), [server3])
+        self.assertEquals(image3.get_si_servers_stored_on(), [server3])
 
         server3.add_stored_pgi_image(image4)
         self.assertEquals(server3.get_stored_pgi_images(), [image3, image4])
 
 
         server4.add_stored_pgi_image(image3)
-        self.assertEquals(image3.get_si_server_image_stored_on(), [server3, server4])
+        self.assertEquals(image3.get_si_servers_stored_on(), [server3, server4])
 
         server3.delete_stored_pgi_image(image3)
-        self.assertEquals(image3.get_si_server_image_stored_on(), [server4])
+        self.assertEquals(image3.get_si_servers_stored_on(), [server4])
 
-        
 
