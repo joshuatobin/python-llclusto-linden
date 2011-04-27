@@ -32,16 +32,16 @@ class LindenPGITests(testbase.ClustoTestBase):
         self.assertEquals(server0.pgi_image, image0)
         self.assertEquals(server1.pgi_image, image1)
 
-        self.assertEquals(type(image0.get_image_associations()), list)
+        self.assertEquals(type(image0.get_hosts_associated_with()), list)
 
-        self.assertEquals(image0.get_image_associations(), [server0])
+        self.assertEquals(image0.get_hosts_associated_with(), [server0])
                             
-        self.assertEquals(image1.get_image_associations(), [server1])
+        self.assertEquals(image1.get_hosts_associated_with(), [server1])
 
         server1.pgi_image = image0
-        self.assertEquals(image0.get_image_associations(), [server0, server1])
+        self.assertEquals(image0.get_hosts_associated_with(), [server0, server1])
         
-        self.assertEquals(image1.get_image_associations(), [])
+        self.assertEquals(image1.get_hosts_associated_with(), [])
 
         server0.pgi_image = image1
         server1.pgi_image = image0
