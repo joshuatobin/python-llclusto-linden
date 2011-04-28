@@ -1,4 +1,5 @@
 from llclusto.drivers import LindenRackableEquipment, LindenHostnameMixin
+from llclusto.drivers.pgi.pgi import PGIImage
 from clusto.drivers import PortMixin, Driver
 from serverclass import ServerClass
 from llclusto.exceptions import LLClustoError
@@ -113,7 +114,10 @@ class LindenServer(LindenRackableEquipment, PortMixin, LindenHostnameMixin):
         Automatically keeps track of the previous associated PGI image in 
         self.previous_pgi_image.
         """
-
+        
+        if not isinstance(image, PGIImage):
+            raise TypeError("Only PGIImage entities may be assigned to the pgi_image attribute.")
+        
         try:
             clusto.begin_transaction()
 
@@ -143,7 +147,7 @@ class LindenServer(LindenRackableEquipment, PortMixin, LindenHostnameMixin):
         Raises RevertPGIImageError if no image was previously associated with 
         this host.
         """
-
+        
         if self.previous_pgi_image is None:
             raise RevertPGIImageError("Cannot revert PGI image, because no image was previously associated with this host.")
 
