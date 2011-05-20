@@ -1,3 +1,9 @@
+python-llclusto-linden (1.0) stable; urgency=low
+
+  * Added LindenServerChassis as a superclass of Class7Chassis and any other kind of server chassis.
+
+ -- Lex Linden <lex@lindenlab.com>  Mon, 16 May 2011 19:35:06 +0000
+
 python-llclusto-linden (0.1) stable; urgency=low
 
   * Initial package creation.

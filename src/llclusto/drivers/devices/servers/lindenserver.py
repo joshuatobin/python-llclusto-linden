@@ -187,3 +187,43 @@ class LindenServer(LindenRackableEquipment, PortMixin, LindenHostnameMixin):
     def has_ipmi(self):
         """ Returns true if server has ipmi configured. """
         return self.has_attr(subkey="ipmi_hostname") and self.has_attr(subkey="ipmi_mac")
+        
+        
+class LindenServerChassis(LindenRackableEquipment, PortMixin):
+    _driver_name = "lindenserverchassis"
+    _clusto_type = "serverchassis"
+    
+    # Hardcoding _num_slots into the class rather than making it a property.
+    # All chassis of a given type will always have the same number of slots.
+    # Subclasses may override this number.
+    
+    _num_slots = 4
+    
+    # Subclasses will probably want to override the size:
+    
+    rack_units = 2
+    
+    
+    def insert(self, server):
+        """Add a server to this chassis."""
+
+        if len(self.contents(clusto_types=["server"])) >= self._num_slots:
+            raise ChassisFullError("Cannot insert server: chassis is full.")
+            
+        super(LindenServerChassis, self).insert(server)
+
+    @classmethod
+    def get_chassis(cls, server):
+        """ Find the chassis in which the given server resides.
+        """
+
+        # Partially cribbed from clusto's basicrack.
+        chassis = set(server.parents(clusto_types=[cls]))
+
+        assert len(chassis) <= 1
+
+        if len(chassis) == 0:
+            return None
+        else:
+            return chassis.pop()
+

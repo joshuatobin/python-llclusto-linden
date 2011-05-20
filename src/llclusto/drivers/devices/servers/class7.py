@@ -1,4 +1,4 @@
-from lindenserver import LindenServer
+from lindenserver import LindenServer, LindenServerChassis
 from llclusto.drivers import LindenRackableEquipment
 from llclusto.drivers import LindenIPMIMixin
 from llclusto.exceptions import LLClustoError
@@ -8,7 +8,7 @@ class ChassisFullError(LLClustoError):
     pass
     
 
-class Class7Chassis(LindenRackableEquipment, PortMixin):
+class Class7Chassis(LindenServerChassis):
     """Class 7 Servers are blade servers, with 4 fitting in each 2U chassis. 
     Each Class 7 Chassis fits four Class 7 Servers, but we don't currently
     keep track of which of the four slots each server is in.  It doesn't
@@ -19,14 +19,6 @@ class Class7Chassis(LindenRackableEquipment, PortMixin):
 
     _driver_name = "class7chassis"
     _clusto_type = "serverchassis"
-
-    # Hardcoding _num_slots into the class rather than making it a property.  
-    # There's never going to be a Class 7 Chassis that has any different number
-    # of slots.
-
-    _num_slots = 4
-
-    rack_units = 2
 
     _properties = {'serial_number': None,
                    'asset_tag': None}
@@ -40,25 +32,8 @@ class Class7Chassis(LindenRackableEquipment, PortMixin):
         if not isinstance(server, Class7Server):
             raise TypeError("Only Class 7 Servers may be inserted into a Class 7 Chassis.")
 
-        if len(self.contents(clusto_types=["server"])) >= self._num_slots:
-            raise ChassisFullError("Cannot insert host: chassis is full.")
-
         super(Class7Chassis, self).insert(server)
 
-    @classmethod
-    def get_chassis(cls, server):
-        """ Find the chassis in which the given server resides.
-        """
-
-        # Partially cribbed from clusto's basicrack.
-        chassis = set(server.parents(clusto_types=[cls]))
-
-        assert len(chassis) <= 1
-
-        if len(chassis) == 0:
-            return None
-        else:
-            return chassis.pop()
 
 class Class7Server(LindenServer, LindenIPMIMixin):
     """A Class 7 Server is a blade that fits in a Class 7 Chassis, 4 per 
