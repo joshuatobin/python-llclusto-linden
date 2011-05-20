@@ -6,8 +6,11 @@ from llclusto.exceptions import LLClustoError
 import clusto
 import llclusto
 
+class ChassisFullError(LLClustoError):
+    pass
 class RevertPGIImageError(LLClustoError):
     pass
+
 
 class LindenServer(LindenRackableEquipment, PortMixin, LindenHostnameMixin):
     """

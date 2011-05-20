@@ -4,9 +4,6 @@ from llclusto.drivers import LindenIPMIMixin
 from llclusto.exceptions import LLClustoError
 from clusto.drivers import PortMixin
 
-class ChassisFullError(LLClustoError):
-    pass
-    
 
 class Class7Chassis(LindenServerChassis):
     """Class 7 Servers are blade servers, with 4 fitting in each 2U chassis. 
