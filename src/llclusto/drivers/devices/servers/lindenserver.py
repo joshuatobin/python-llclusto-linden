@@ -1,4 +1,4 @@
-from llclusto.drivers import LindenRackableEquipment, LindenHostnameMixin
+from llclusto.drivers import LindenRackableEquipment, LindenHostnameMixin, LindenPowerMixin
 from llclusto.drivers.pgi.pgi import PGIImage
 from clusto.drivers import PortMixin, Driver
 from serverclass import ServerClass
@@ -12,7 +12,7 @@ class RevertPGIImageError(LLClustoError):
     pass
 
 
-class LindenServer(LindenRackableEquipment, PortMixin, LindenHostnameMixin):
+class LindenServer(LindenRackableEquipment, PortMixin, LindenHostnameMixin, LindenPowerMixin):
     """
     LindenServer driver.  Holds common functionality shared by all servers.
     It is not intended that you instantiate Entities of this class directly.
@@ -192,7 +192,7 @@ class LindenServer(LindenRackableEquipment, PortMixin, LindenHostnameMixin):
         return self.has_attr(subkey="ipmi_hostname") and self.has_attr(subkey="ipmi_mac")
         
         
-class LindenServerChassis(LindenRackableEquipment, PortMixin):
+class LindenServerChassis(LindenRackableEquipment, PortMixin, LindenPowerMixin):
     _driver_name = "lindenserverchassis"
     _clusto_type = "serverchassis"
     
