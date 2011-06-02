@@ -1,6 +1,6 @@
 from llclusto.drivers import LindenRackableEquipment, LindenHostnameMixin
 from llclusto.drivers.pgi.pgi import PGIImage
-from clusto.drivers import PortMixin, Driver
+from clusto.drivers import PortMixin, Driver, UniquePool
 from serverclass import ServerClass
 from llclusto.exceptions import LLClustoError
 import clusto
@@ -11,6 +11,13 @@ class ChassisFullError(LLClustoError):
 class RevertPGIImageError(LLClustoError):
     pass
 
+class HostState(UniquePool):
+    """Track a host's state (up, out for RMA, etc).
+    
+    A host may only be in one state at a time.  This is enforced by subclassing from UniquePool.
+    """
+
+    _driver_name = "hoststatus"
 
 class LindenServer(LindenRackableEquipment, PortMixin, LindenHostnameMixin):
     """
@@ -192,6 +199,41 @@ class LindenServer(LindenRackableEquipment, PortMixin, LindenHostnameMixin):
         return self.has_attr(subkey="ipmi_hostname") and self.has_attr(subkey="ipmi_mac")
         
         
+    def get_state(self):
+        """Get this host's state.  Actually gets the name of the HostState that contains this host.
+        
+        Returns None if the host has no state.
+        """
+        
+        
+        try:
+            state = self.parents(clusto_drivers=[HostState])[0]
+            return state.name
+        except IndexError:
+            return None
+    
+    def set_state(self, state_name):
+        """Changes this host's state.
+        
+        state_name must be the name of an existing HostState entity."""
+        
+        try:
+            host_state = clusto.get_by_name(state_name)
+            self.del_state()
+            host_state.insert(self)
+        except LookupError:
+            raise ValueError("%s is not a valid host state." % state_name)
+    
+    def del_state(self):
+        """Clear this host's state."""
+        try:
+            state = self.parents(clusto_drivers=[HostState])[0]
+            state.remove(self)
+        except IndexError:
+            pass
+            
+    state = property(get_state, set_state, del_state)
+
 class LindenServerChassis(LindenRackableEquipment, PortMixin):
     _driver_name = "lindenserverchassis"
     _clusto_type = "serverchassis"
@@ -229,4 +271,3 @@ class LindenServerChassis(LindenRackableEquipment, PortMixin):
             return None
         else:
             return chassis.pop()
-
