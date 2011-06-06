@@ -1,7 +1,7 @@
 import llclusto
 from llclusto.test import testbase
 
-from llclusto.drivers import LindenServer, ServerClass, RevertPGIImageError, LindenIPMIMixin, PGIImage
+from llclusto.drivers import LindenServer, ServerClass, RevertPGIImageError, LindenIPMIMixin, PGIImage, HostState
 
 class ClassXServer(LindenServer):
     """A subclass of LindenServer specifically here to let us test LindenServer.
@@ -150,4 +150,22 @@ class LindenServerTests(testbase.ClustoTestBase):
         self.assertFalse(server1.has_ipmi(), "Server has ipmi configured when it should not.")
         server2.set_ipmi_info("mgmt.test2.lindenlab.com", "01:02:03:04:05:06")
         self.assertTrue(server2.has_ipmi(), "Server does not have ipmi configured when it should.")
+    
+    def test_state(self):
+        server1 = ClassXServer("test1.lindenlab.com")
+        server2 = ClassXServer("test2.lindenlab.com")
         
+        state1 = HostState("state 1")
+        state2 = HostState("state 2")
+        
+        server1.state = "state 1"
+        
+        self.assertEquals(server1.state, "state 1")
+        self.assertEquals(state1.contents(), [server1])
+        
+        server2.state = "state 2"
+        server1.state = "state 2"
+        
+        self.assertEquals(server1.state, "state 2")
+        self.assertEquals(sorted(state2.contents()), sorted([server1, server2]))
+        self.assertEquals(state1.contents(), [])

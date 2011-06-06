@@ -1,4 +1,4 @@
-from lindenserver import LindenServer, LindenServerChassis, RevertPGIImageError, ChassisFullError
+from lindenserver import LindenServer, LindenServerChassis, RevertPGIImageError, ChassisFullError, HostState
 from database import DBX, DB2008, DB2009, DB2009SSD, DWDB, DWDB2008, DWDB2009
 from serverclass import ServerClass
 from orca import Orca, Orca2009
