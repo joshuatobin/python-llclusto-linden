@@ -1,3 +1,9 @@
+python-llclusto-linden (1.2) stable; urgency=low
+
+  * Adding new power management methods to manage SNMP enabled pdus. 
+
+ -- Joshua Tobin <joshua@lindenlab.com>  Mon, 06 Jun 2011 10:10:06 -0700
+
 python-llclusto-linden (1.1) stable; urgency=low
 
   * Added LindenServerChassis as a superclass of Class7Chassis and any other kind of server chassis.

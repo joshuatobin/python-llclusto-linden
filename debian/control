@@ -7,6 +7,6 @@ Standards-Version: 3.7.2
 
 Package: python-llclusto-linden
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, ${python:Depends}, clusto
+Depends: ${shlibs:Depends}, ${misc:Depends}, ${python:Depends}, clusto, libsnmp-python, ipmitool
 Description: Linden Lab drivers for clusto
  This package provides a set of drivers used to model Linden Lab's equipment in Clusto.
