@@ -20,8 +20,9 @@ class LindenPowerMixin():
                 return [{'ipmi': self.ipmi[0]}]
             elif 'pwr-nema-5' in port_info:
                 for port_num in port_info['pwr-nema-5']:
-                    pdu_connections.append({'pdu': port_info['pwr-nema-5'][port_num]['connection'],
-                                            'port': port_info['pwr-nema-5'][port_num]['otherportnum']})
+                    if port_info['pwr-nema-5'][port_num]['connection']:
+                        pdu_connections.append({'pdu': port_info['pwr-nema-5'][port_num]['connection'],
+                                                'port': port_info['pwr-nema-5'][port_num]['otherportnum']})
                 return pdu_connections
             else:
                 return pdu_connections
