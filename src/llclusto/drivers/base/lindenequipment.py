@@ -1,7 +1,8 @@
 import clusto
 from clusto.drivers import *
+from llclusto.drivers.common import LogMixin
 
-class LindenEquipment(Driver):
+class LindenEquipment(Driver, LogMixin):
 
     _driver_name="lindenequipment"
     _clusto_type="device"

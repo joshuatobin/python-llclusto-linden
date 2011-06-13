@@ -1,7 +1,7 @@
 import clusto
 from clusto.drivers import *
 
-class LindenHostnameMixin():
+class LindenHostnameMixin(object):
     """Provides hostname functionality.
 
     Hostnames are stored on a per-port basis, and multiple hostnames can be

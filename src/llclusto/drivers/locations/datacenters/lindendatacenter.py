@@ -1,7 +1,8 @@
 import clusto
 from clusto.drivers.locations.datacenters import BasicDatacenter
+from llclusto.drivers.common import LogMixin
 
-class LindenDatacenter(BasicDatacenter):
+class LindenDatacenter(BasicDatacenter, LogMixin):
     """
     LindenDatacenter driver.
     """

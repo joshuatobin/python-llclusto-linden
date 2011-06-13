@@ -1,5 +1,5 @@
 import clusto
-
+from datetime import datetime
 
 def get_by_hostname(hostname):
     """
@@ -17,4 +17,3 @@ def get_by_hostname(hostname):
                 }])
 
     return primary_hostname + hostname_alias
-

@@ -9,7 +9,7 @@ IPMI_TOOL = '/usr/bin/ipmitool -I lanplus -H %s -U ADMIN -P ADMIN %s'
 class IPMIHostnameError(LLClustoError):
     pass
 
-class LindenIPMIMixin():
+class LindenIPMIMixin(object):
     """ Provides IPMI functionality.
     
     The IPMI interface will be associated with a single port on 

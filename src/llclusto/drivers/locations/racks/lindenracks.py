@@ -1,9 +1,10 @@
 import clusto
 from llclusto.drivers.devices.powerstrips import LindenPDU
 from llclusto.drivers.base import LindenEquipment, LindenRackableEquipment
+from llclusto.drivers.common import LogMixin
 from clusto.drivers.locations.racks import BasicRack
 
-class LindenRack(BasicRack):
+class LindenRack(BasicRack, LogMixin):
     """
     LindenRack driver.
     """
