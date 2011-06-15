@@ -49,7 +49,7 @@ class LogEvent(Driver):
 
             name_manager.allocate(self, name)
             for key in kwargs:
-                self.add_attr(key=key, value=kwargs[key])
+                self.add_attr(key="_extra", subkey=key, value=kwargs[key])
             clusto.commit()
         except:
             clusto.rollback_transaction()
@@ -67,7 +67,7 @@ class LogEvent(Driver):
         try:
             return super(LogEvent, self).__getattr__(name)
         except AttributeError:
-            value = self.attr_value(key=name)
+            value = self.attr_value(key = "_extra", subkey=name)
             if not value:
                 raise AttributeError("Attribute %s does not exist." % name)
             return value
@@ -99,7 +99,7 @@ class LogEvent(Driver):
             super(LogEvent, self).__setattr__(name, value)
         # Otherwise store the value as an attribute in clusto
         else:
-            self.set_attr(key=name, value=value)
+            self.set_attr(key = "_extra", subkey=name, value=value)
 
 
     def set_source_entity(self, source_entity):
