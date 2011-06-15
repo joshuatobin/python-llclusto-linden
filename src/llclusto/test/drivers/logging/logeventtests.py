@@ -146,7 +146,7 @@ class LogEventTests(testbase.ClustoTestBase):
                      test_param = "test")
         l.test_param = "test2"
         self.assertEquals(l.test_param, "test2")
-        self.assertEquals(l.attr_value(key = "_extra", subkey="test_param"), "test2")
+        self.assertEquals(l.attr_value(key="test_param" ,subkey = "_extra"), "test2")
 
 
     def test_get_log_events(self):
