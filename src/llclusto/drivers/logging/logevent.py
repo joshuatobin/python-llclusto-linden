@@ -20,7 +20,7 @@ class LogEvent(Driver):
                     'description': None}
 
             
-    def __init__(self, source_entity, user, event_type, timestamp, description=None, **kwargs):
+    def __init__(self, source_entity, user, event_type, timestamp=None, description=None, **kwargs):
         """Create a new LogEvent instance
         
         Keyword arguments:
@@ -35,6 +35,9 @@ class LogEvent(Driver):
             name_manager = clusto.get_by_name("LogEvent_name_manager")
         except LookupError:
             name_manager = SimpleNameManager("LogEvent_name_manager", basename="Log", digits=10)
+
+        if not timestamp:
+            timestamp = datetime.datetime.utcnow()
 
         try:
             clusto.begin_transaction()
