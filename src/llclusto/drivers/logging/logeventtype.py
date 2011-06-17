@@ -9,3 +9,5 @@ class LogEventType(Driver):
     """
     _driver_name="logeventtype"
     _clusto_type="logeventtype"
+
+    _properties = {"description" : None}
