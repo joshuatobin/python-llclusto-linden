@@ -13,6 +13,7 @@ class LogEventTests(testbase.ClustoTestBase):
 
 
     def data(self):
+        llclusto.drivers.HostState('up')
         LogEventType("test event")
         ServerClass("Class L Server", num_cpus=3, cores_per_cpu=3, ram_size=19, disk_size=230)
         self.host = ClassLServer("hostx")

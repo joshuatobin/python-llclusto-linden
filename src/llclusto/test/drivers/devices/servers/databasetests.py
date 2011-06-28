@@ -9,6 +9,7 @@ from llclusto.drivers import DBX, \
 class DBTests(testbase.ClustoTestBase):
 
     def data(self):
+        llclusto.drivers.HostState('up')
         dbx = ServerClass("DB X", num_cpus=2, cores_per_cpu=4, ram_size=32768, disk_size=536)
         db2008 = ServerClass("DB 2008", num_cpus=2, cores_per_cpu=4, ram_size=65536, disk_size=403)
         db2009 = ServerClass("DB 2009", num_cpus=2, cores_per_cpu=4, ram_size=49152, disk_size=1238)

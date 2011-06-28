@@ -6,6 +6,7 @@ from llclusto.drivers import ServerClass, Class7Chassis, Class7Server, ChassisFu
 
 class Class7Tests(testbase.ClustoTestBase):
     def data(self):
+        llclusto.drivers.HostState('up')
         class5 = ServerClass("Class 5", num_cpus=1, cores_per_cpu=4, ram_size=4096, disk_size=138)
         class7 = ServerClass("Class 7", num_cpus=2, cores_per_cpu=4, ram_size=24576, disk_size=150)
 

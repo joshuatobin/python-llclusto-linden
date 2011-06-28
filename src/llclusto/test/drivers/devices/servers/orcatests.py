@@ -4,6 +4,7 @@ from llclusto.drivers import Orca, Orca2009, ServerClass
 
 class OrcaTests(testbase.ClustoTestBase):
     def data(self):
+        llclusto.drivers.HostState('up')
         orca = ServerClass("Orca", num_cpus=2, cores_per_cpu=4, ram_size=16384, disk_size=5500)
         orca2009 = ServerClass("Orca 2009", num_cpus=2, cores_per_cpu=4, ram_size=24576, disk_size=9000)
 

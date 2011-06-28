@@ -25,6 +25,7 @@ class ClassYServer(LindenServer, LindenIPMIMixin):
 
 class LindenServerTests(testbase.ClustoTestBase):
     def data(self):
+        llclusto.drivers.HostState('up')
         classX = ServerClass("Class X Server", num_cpus=3, cores_per_cpu=3, ram_size=19, disk_size=230)
     
     def test___init__(self):
