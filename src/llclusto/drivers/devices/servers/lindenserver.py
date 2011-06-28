@@ -79,6 +79,11 @@ class LindenServer(LindenRackableEquipment, PortMixin, LindenHostnameMixin, Lind
 
             self.server_class = ServerClass.get_server_class(self._server_class_name)
 
+            try:
+                self.state = 'up'
+            except LookupError, e:
+                print e
+            
             clusto.commit()
         except:
             clusto.rollback_transaction()
