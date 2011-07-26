@@ -25,6 +25,7 @@ class ClassYServer(LindenServer, LindenIPMIMixin):
 
 class LindenServerTests(testbase.ClustoTestBase):
     def data(self):
+        llclusto.drivers.HostState('up')
         classX = ServerClass("Class X Server", num_cpus=3, cores_per_cpu=3, ram_size=19, disk_size=230)
     
     def test___init__(self):
@@ -169,3 +170,8 @@ class LindenServerTests(testbase.ClustoTestBase):
         self.assertEquals(server1.state, "state 2")
         self.assertEquals(sorted(state2.contents()), sorted([server1, server2]))
         self.assertEquals(state1.contents(), [])
+
+    def test_default_state(self):
+        server1 = ClassXServer("test1.lindenlab.com")
+
+        self.assertEquals(server1.state, "up")

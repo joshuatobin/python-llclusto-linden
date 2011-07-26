@@ -1,11 +1,12 @@
 import llclusto
 from llclusto.test import testbase
-
 from llclusto.drivers import Class6Server, ServerClass
 
 
 class Class6Tests(testbase.ClustoTestBase):
     def data(self):
+        llclusto.drivers.HostState('up')
+
         class6 = ServerClass("Class 6", num_cpus=1, cores_per_cpu=4, ram_size=4096, disk_size=500)
 
     def test_class6(self):

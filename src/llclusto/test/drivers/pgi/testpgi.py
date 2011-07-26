@@ -12,6 +12,7 @@ class LindenPGITests(testbase.ClustoTestBase):
         """
         Test for get_image_association() fucntion.
         """
+        llclusto.drivers.HostState('up')
         class5 = ServerClass("Class 5", num_cpus=1, cores_per_cpu=4, ram_size=4096, disk_size=138)
 
         server0 = Class5Server("pgi0.lindenlab.com")
@@ -54,7 +55,7 @@ class LindenPGITests(testbase.ClustoTestBase):
         """
         Tests for the get_si_server_image_stored_on() function.
         """
-
+        llclusto.drivers.HostState('up')
         class5 = ServerClass("Class 5", num_cpus=1, cores_per_cpu=4, ram_size=4096, disk_size=138)
         server3 = Class5Server("pgi3.lindenlab.com")
         server4 = Class5Server("pgi4.lindenlab.com")

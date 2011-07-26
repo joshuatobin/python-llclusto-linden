@@ -20,7 +20,7 @@ class LogEvent(Driver):
                     'description': None}
 
             
-    def __init__(self, source_entity, user, event_type, timestamp, description=None, **kwargs):
+    def __init__(self, source_entity, user, event_type, timestamp=None, description=None, **kwargs):
         """Create a new LogEvent instance
         
         Keyword arguments:
@@ -36,6 +36,9 @@ class LogEvent(Driver):
         except LookupError:
             name_manager = SimpleNameManager("LogEvent_name_manager", basename="Log", digits=10)
 
+        if not timestamp:
+            timestamp = datetime.datetime.utcnow()
+
         try:
             clusto.begin_transaction()
 
@@ -49,7 +52,7 @@ class LogEvent(Driver):
 
             name_manager.allocate(self, name)
             for key in kwargs:
-                self.add_attr(key=key, value=kwargs[key])
+                self.add_attr(key=key, subkey="_extra", value=kwargs[key])
             clusto.commit()
         except:
             clusto.rollback_transaction()
@@ -67,7 +70,7 @@ class LogEvent(Driver):
         try:
             return super(LogEvent, self).__getattr__(name)
         except AttributeError:
-            value = self.attr_value(key=name)
+            value = self.attr_value(key=name, subkey="_extra")
             if not value:
                 raise AttributeError("Attribute %s does not exist." % name)
             return value
@@ -99,7 +102,7 @@ class LogEvent(Driver):
             super(LogEvent, self).__setattr__(name, value)
         # Otherwise store the value as an attribute in clusto
         else:
-            self.set_attr(key=name, value=value)
+            self.set_attr(key=name, subkey="_extra", value=value)
 
 
     def set_source_entity(self, source_entity):

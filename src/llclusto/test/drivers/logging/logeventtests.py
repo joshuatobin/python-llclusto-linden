@@ -13,6 +13,7 @@ class LogEventTests(testbase.ClustoTestBase):
 
 
     def data(self):
+        llclusto.drivers.HostState('up')
         LogEventType("test event")
         ServerClass("Class L Server", num_cpus=3, cores_per_cpu=3, ram_size=19, disk_size=230)
         self.host = ClassLServer("hostx")
@@ -146,7 +147,7 @@ class LogEventTests(testbase.ClustoTestBase):
                      test_param = "test")
         l.test_param = "test2"
         self.assertEquals(l.test_param, "test2")
-        self.assertEquals(l.attr_value(key="test_param"), "test2")
+        self.assertEquals(l.attr_value(key="test_param" ,subkey = "_extra"), "test2")
 
 
     def test_get_log_events(self):

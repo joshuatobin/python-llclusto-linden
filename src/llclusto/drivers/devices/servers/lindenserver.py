@@ -79,6 +79,8 @@ class LindenServer(LindenRackableEquipment, PortMixin, LindenHostnameMixin, Lind
 
             self.server_class = ServerClass.get_server_class(self._server_class_name)
 
+            self.state = 'up'
+
             clusto.commit()
         except:
             clusto.rollback_transaction()
