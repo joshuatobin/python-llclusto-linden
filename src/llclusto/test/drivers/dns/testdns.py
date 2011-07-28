@@ -15,7 +15,6 @@ class LindenDNSTests(testbase.ClustoTestBase):
         self.assertEquals(pool.type, 'pool')
         self.assertEquals(pool.name, 'webservers')
 
-
     def test_dns_record(self):
         """
         Test for dns records"
@@ -30,21 +29,5 @@ class LindenDNSTests(testbase.ClustoTestBase):
         record.comment = "Shiny New Comment"
         self.assertEquals(record.comment, "Shiny New Comment")
         
-        record.create_dns_service_group("bacula")
 
-        bacula = clusto.get_by_name("bacula")
-        self.assertEquals(bacula.type, "pool")
-
-        record.set_dns_service_group("bacula")
-
-        record.create_dns_service_group("loadbalancers")
-        lb = clusto.get_by_name("loadbalancers")
-
-        record.set_dns_service_group("loadbalancers")
-
-        self.assertEquals(record.get_dns_service_groups(), [bacula, lb])
-
-        record.unset_dns_service_group("bacula")
-
-        self.assertEquals(record.get_dns_service_groups(), [lb])
 
